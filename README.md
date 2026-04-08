@@ -30,11 +30,17 @@ Unlike typical NLP fine-tuning, this project shows how agents can learn from hum
 ## 🌟 Key Features
 
 ✅ **End-to-End Agentic Pipeline** - Browser agent autonomously gathers training data
+
 ✅ **Automatic Preference Pairs** - Generated without human annotation
+
 ✅ **Domain-Specific Alignment** - Tailored for aerospace engineering
+
 ✅ **Real-Time Knowledge** - Uses live web search, not static datasets
+
 ✅ **Research Validated** - Includes findings on DPO limitations with small data
+
 ✅ **Google Colab Ready** - Fully reproducible in free cloud environment
+
 ✅ **Production Documentation** - Clear deployment guidelines
 
 ## 📚 Technical Architecture
