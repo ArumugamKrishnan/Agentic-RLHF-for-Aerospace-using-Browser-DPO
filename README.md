@@ -29,6 +29,7 @@ Preference Pair Creation (chosen vs rejected)
 DPO Training
       ↓
 Evaluation (Base vs Fine-tuned)
+
 🛠️ Tech Stack
 Component	Tool
 Model	Qwen 0.5B
@@ -38,6 +39,7 @@ Framework	HuggingFace TRL
 Environment	Google Colab Pro
 Quantization	4-bit (bitsandbytes)
 Evaluation	Keyword engineering scoring
+
 📂 Notebook Workflow
 Step 1 — Install Dependencies
 
@@ -57,6 +59,7 @@ Rejected → Generic useless answer
 Saved as:
 
 browser_aerospace_dataset.json
+
 Step 4 — DPO Fine-Tuning
 
 Model: Qwen/Qwen1.5-0.5B
@@ -68,6 +71,7 @@ DPOTrainer
 Output:
 
 final_dpo_Aerospace_agent
+
 Step 5 — Base vs Fine-Tuned Evaluation
 
 Both models are tested on aerospace prompts such as:
@@ -77,12 +81,14 @@ Composite inspection checklist
 BVLOS rules
 Structural validation
 MIL wiring standards
+
 Step 6 — Engineering Quality Scoring
 
 A keyword-based metric evaluates technical relevance:
 
 keywords = ["FAA","EASA","NASA","inspection","checklist",
             "composite","airworthiness","structural","MIL","standard"]
+
 Step 7 — Numerical Summary
 
 Example output:
@@ -124,6 +130,7 @@ Evaluation results will print automatically
 Download:
 evaluation_results.json
 final_dpo_Aerospace_agent
+
 📁 Files Generated
 File	Purpose
 browser_aerospace_dataset.json	Preference dataset
