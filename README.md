@@ -1,145 +1,157 @@
-✈️ Agentic RLHF for Aerospace using Browser + DPO
+Agentic RLHF for Aerospace Engineering using Browser + DPO
 
-This project demonstrates how Agentic AI systems can be aligned using Reinforcement Learning from Human Feedback (RLHF) for aerospace engineering tasks.
+This project demonstrates a complete Agentic RLHF pipeline for aerospace engineering tasks by combining:
 
-We build a browser-based aerospace dataset, create human preference pairs, and fine-tune a small language model using Direct Preference Optimization (DPO) to improve domain alignment.
+🌐 Browser-based knowledge retrieval
+👥 Human preference style data generation
+🧠 Direct Preference Optimization (DPO)
+📊 Base vs Fine-Tuned model evaluation
 
-🎯 Objective
+The goal is to train a small language model to behave like an Aerospace Engineering Assistant that gives structured, regulation-aware, engineering-quality responses.
 
-To show that an LLM can be aligned toward aerospace engineering knowledge by:
+🚀 Motivation
 
-Collecting real aerospace data from the web (browser tool)
-Creating human preference data (chosen vs rejected answers)
-Fine-tuning using DPO (RLHF without PPO)
-Evaluating improvement over the base model
-🧠 Research Foundation
+Generic LLMs produce:
 
-This project is inspired by:
+Hallucinated aviation regulations
+Repetitive, non-technical answers
+Poor engineering checklist quality
 
-John Schulman et al. — PPO (2017)
-Paul Christiano et al. — Learning from Human Preferences (2017)
-Long Ouyang et al. — InstructGPT / RLHF (2022)
-Yuntao Bai et al. — Constitutional AI (2022)
-Hugging Face TRL / TRLx libraries
-🏗️ Project Pipeline
-Browser Search → Aerospace Text → Preference Dataset
-        ↓
-   DPO Fine-Tuning (RLHF)
-        ↓
- Base Model vs Fine-Tuned Model Evaluation
-📦 Model Used
-Alibaba Cloud Qwen1.5-0.5B
-Quantized to 4-bit using BitsAndBytes for Colab training
-🌐 Step 1 — Browser-Based Aerospace Dataset
+This project shows how to align a model using aerospace web knowledge + preference learning, without expensive human labeling.
 
-We use SerpAPI + Newspaper3k to fetch live aerospace information:
+🧠 True RLHF Logic Implemented
+Browser Search
+      ↓
+Aerospace Text Extraction
+      ↓
+Preference Pair Creation (chosen vs rejected)
+      ↓
+DPO Training
+      ↓
+Evaluation (Base vs Fine-tuned)
+🛠️ Tech Stack
+Component	Tool
+Model	Qwen 0.5B
+Training Method	DPO (Direct Preference Optimization)
+Data Source	Live browser search (SerpAPI + newspaper3k)
+Framework	HuggingFace TRL
+Environment	Google Colab Pro
+Quantization	4-bit (bitsandbytes)
+Evaluation	Keyword engineering scoring
+📂 Notebook Workflow
+Step 1 — Install Dependencies
 
-Examples:
+Installs TRL, Transformers, SerpAPI, newspaper3k, bitsandbytes.
 
-FAA BVLOS rules
-NASA Artemis updates
-Composite inspection methods
-DO-160 EMI standards
-UAV pre-flight checklist
+Step 2 — Browser Search Function
 
-Each prompt generates:
+Uses SerpAPI to fetch aerospace links and extracts article text.
 
-✅ Chosen answer (web-grounded summary)
-❌ Rejected answer (generic reply)
+Step 3 — Create Preference Dataset
+
+For each aerospace prompt:
+
+Chosen → Web-based summarized answer
+Rejected → Generic useless answer
 
 Saved as:
 
 browser_aerospace_dataset.json
-🤝 Step 2 — Human Preference Data (RLHF Core)
+Step 4 — DPO Fine-Tuning
 
-For each aerospace prompt:
+Model: Qwen/Qwen1.5-0.5B
 
-Prompt	Chosen (Good)	Rejected (Bad)
-FAA rules	Web summary	Generic text
-Composite inspection	Detailed checklist	Vague info
+Trained using:
 
-This simulates human ranking, required for DPO.
+DPOTrainer
 
-🧪 Step 3 — DPO Fine-Tuning
+Output:
 
-We fine-tune using TRL’s DPOTrainer:
+final_dpo_Aerospace_agent
+Step 5 — Base vs Fine-Tuned Evaluation
 
-No reward model
-No PPO instability
-Direct preference learning
+Both models are tested on aerospace prompts such as:
 
-Output model:
+FAA UAV certification
+Composite inspection checklist
+BVLOS rules
+Structural validation
+MIL wiring standards
+Step 6 — Engineering Quality Scoring
 
-final_dpo_Aerospace_agent/
-📊 Step 4 — Evaluation Method
+A keyword-based metric evaluates technical relevance:
 
-We compare Base vs Fine-Tuned model on aerospace prompts.
+keywords = ["FAA","EASA","NASA","inspection","checklist",
+            "composite","airworthiness","structural","MIL","standard"]
+Step 7 — Numerical Summary
 
-Evaluation metric:
+Example output:
 
-Presence of aerospace keywords:
-FAA, EASA, NASA, composite, airworthiness, inspection, MIL, standard
+Average Base Model Score: 2.00
+Average Fine-Tuned Model Score: 1.60
 
-Saved as:
+This shows that naive DPO with small data is insufficient, highlighting the need for:
+
+Reward model + larger dataset → true RLHF
+
+This is an important research finding of the project.
+
+Step 8 — Export Results
+
+Saved to:
 
 evaluation_results.json
-📈 Numerical Results (Example)
-Metric	Base Model	Fine-Tuned Model
-Avg Keyword Score	2.00	1.60
+📊 Key Observation (Important for Report)
 
-Shows that small dataset + 1 epoch is not sufficient → important research observation
+Even after DPO:
 
-🧪 Key Research Insight
+Model still hallucinates
+Needs reward model for true alignment
+Needs larger aerospace dataset
 
-This project proves:
+This validates the need for full RLHF pipeline:
 
-RLHF requires high-quality preference data and larger datasets to produce meaningful alignment.
-
-This is a valuable capstone research outcome, not a failure.
-
-▶️ How to Run (Colab)
+Browser → Preference pairs → Reward Model → DPO → Evaluate
+🧪 How to Run (Reproducibility)
 Open the Colab notebook
-Add your SERP_API_KEY
-Run all cells:
-Dataset creation
-DPO training
-Evaluation
-📁 Repository Structure
-├── Agentic_RLHF_Aerospace_Colab.ipynb
-├── browser_aerospace_dataset.json
-├── evaluation_results.json
-├── final_dpo_Aerospace_agent/
-└── README.md
-🧩 Tools & Libraries
-transformers
-trl
-datasets
-bitsandbytes
-serpapi
-newspaper3k
-🧠 What This Project Demonstrates
-Agentic AI + Browser tool usage
-RLHF using DPO
-Aerospace domain alignment
-Evaluation methodology for alignment
-Practical limitations of small-scale RLHF
-🚀 Future Improvements
-Increase dataset to 200–500 aerospace prompts
-Use larger model (Qwen 1.8B / 4B)
-Use real human ranking instead of synthetic
-Add Constitutional AI for safety
-Combine Offline RL + RLHF
-👨‍🎓 Academic Relevance (M.Tech Capstone)
 
-This project falls under:
+Add your SerpAPI key:
 
-RLHF & Alignment
-Agentic RL
-Reasoning & Search
-📜 License
+SERP_API_KEY = "YOUR_KEY"
+Run all cells sequentially
+Wait for DPO training (~30–60 mins on Colab Pro)
+Evaluation results will print automatically
+Download:
+evaluation_results.json
+final_dpo_Aerospace_agent
+📁 Files Generated
+File	Purpose
+browser_aerospace_dataset.json	Preference dataset
+final_dpo_Aerospace_agent/	Fine-tuned model
+evaluation_results.json	Model comparison results
+🎯 What This Project Proves
 
-For academic and research purposes only.
+✅ How to build dataset using browser
+✅ How to create preference pairs automatically
+✅ How to fine-tune with DPO
+✅ How to evaluate LLM for engineering quality
+✅ Why reward model is required for real RLHF
 
-🙌 Acknowledgment
+🔮 Future Work (True RLHF Extension)
+Train a Reward Model on preference pairs
+Use reward inside DPO
+Increase aerospace dataset size (1000+ prompts)
+Add regulation PDFs and standards
+Deploy as Aerospace Engineering Agent
+👨‍💻 Author
 
-Built using open research from OpenAI, Anthropic, and Hugging Face communities.
+M.Tech Capstone Project — Agentic RLHF for Aerospace Engineering
+
+🧾 Citation / Concept References
+RLHF & Preference Learning
+DPO (Direct Preference Optimization)
+Agentic AI using browser tools
+Aerospace engineering alignment of LLMs
+✅ Final Outcome
+
+This repository demonstrates a practical, reproducible Agentic RLHF pipeline and highlights the gap between naive DPO and true RLHF, which is the core research contribution of this project.
